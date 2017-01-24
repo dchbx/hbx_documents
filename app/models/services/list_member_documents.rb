@@ -1,8 +1,10 @@
 module Services
   class ListMemberDocuments
     def initialize(member_document_class = MemberDocument, body_parser_class = Parsers::DocumentListRequest)
-      @doc_class = member_document_class
+      #@doc_class = member_document_class
       @parser_klass = body_parser_class
+      s3 = Aws::S3::Client.new 
+      @doc_class = s3.get_object(bucket:'tax-documents', key:'object-key')
     end
 
     def construct_pipeline

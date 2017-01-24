@@ -15,6 +15,14 @@ HbxDocuments::App.controllers :files do
     t_file = file[:tempfile]
     ct = params[:content_type] || "application/octet-stream"
     f_name = params[:file_name] || params[:file][:filename]
+    uri = Aws::S3Storage.save(file, 'tax-documents') || "nice-uri"
+    person = Person.where(hbx_id(File.basename(file))).first || (puts "Could not find person for doc #{File.basename(file)}")
+
+    content_type = MIME::Types.type_for(File.basename(file)).first.content_type
+
+    person.documents << Document.new({identifier:uri, title:File.basename(file), format:content_type, subject:subject, rights: 'pii_restricted'})
+
+    person.save!
     sf = StoredFile.store(f_name, ct, t_file)
     status '202'
     sf.id
@@ -25,6 +33,8 @@ HbxDocuments::App.controllers :files do
   end
 
   get :download, :map => "/files", :with => :id do
+    s3 = Aws::S3::Client.new  
+    @doc_class = s3.get_object(bucket:'tax-documents', key:'object-key')
     sf = StoredFile.where({"id" => params[:id] }).first
     if sf
       content_type sf.contentType

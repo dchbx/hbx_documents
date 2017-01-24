@@ -1,7 +1,8 @@
 module Services
   class GetMemberDocument
     def initialize(member_document_class = MemberDocument, body_parser_class = Parsers::DocumentListRequest)
-      @doc_class = member_document_class
+      s3 = Aws::S3::Client.new 
+      @doc_class = s3.get_object(bucket:'tax-documents', key:'object-key')
       @parser_klass = body_parser_class
     end
 
@@ -14,7 +15,7 @@ module Services
         rc, m_id = call_person_match(data.identity)
         case rc
         when "200"
-          doc_for_member(m_id, doc_id)
+          doc_for_member(m_id, doc_id)  
         when "409"
           ["409", nil]
         else
