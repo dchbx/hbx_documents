@@ -20,9 +20,9 @@ HbxDocuments::App.controllers :files do
 
     content_type = MIME::Types.type_for(File.basename(file)).first.content_type
 
-    person.documents << Document.new({identifier:uri, title:File.basename(file), format:content_type, subject:subject, rights: 'pii_restricted'})
+    family.documents << Document.new({identifier:uri, title:File.basename(file), format:content_type, subject:subject, rights: 'pii_restricted'})
 
-    person.save!
+    family.save!
     sf = StoredFile.store(f_name, ct, t_file)
     status '202'
     sf.id
