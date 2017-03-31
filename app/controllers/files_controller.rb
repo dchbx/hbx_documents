@@ -1,6 +1,10 @@
 HbxDocuments::App.controllers :files do
-
+  include BasicAuth::Authentication
   register Padrino::Flash
+
+  before do
+    halt(401) unless authenticate_or_request_with_http_basic("Files")
+  end
 
   get :new, :map => "files/new" do
       render 'files/new'
