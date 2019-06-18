@@ -3,8 +3,10 @@
 require 'csv'
 require 'fileutils'
 class ExportHbxMembers1095A
+  attr_accessor :field_names
+
   def initialize
-    @filed_names = %w[HBX\ Member\ IDS Document\ Name]
+    self.field_names = %w[HBX\ Member\ IDS Document\ Name]
     export_deatils
   end
 
@@ -16,7 +18,7 @@ class ExportHbxMembers1095A
     puts "Total number of Member Documents collection count is #{kollection.count}"
 
     CSV.open(file_name, "w", force_quotes: true) do |csv|
-      csv << @field_names
+      csv << field_names
       kollection.each do |member_document|
         csv << [member_document.send(:member_id),
                 member_document.send(:document_name)]
