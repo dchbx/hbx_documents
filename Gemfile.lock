@@ -46,7 +46,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    mini_portile (0.6.2)
+    mini_portile2 (2.5.1)
     minitest (5.5.1)
     moneta (0.7.20)
     mongoid (4.0.0)
@@ -61,8 +61,9 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.11.4)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
     nokogiri-happymapper (0.5.9)
       nokogiri (~> 1.5)
     optionable (0.2.0)
@@ -105,6 +106,7 @@ GEM
     padrino-support (0.12.4)
       activesupport (>= 3.1)
     polyglot (0.3.5)
+    racc (1.5.2)
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
@@ -153,7 +155,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bluepill (= 0.0.69)
+  bluepill (= 0.1.2)
   bunny
   capistrano
   capistrano-bundler
